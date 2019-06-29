@@ -1,5 +1,7 @@
 package com.example.practice;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -18,11 +20,16 @@ public class MainActivity extends AppCompatActivity {
     private MainRecyclerViewAdapter mainRecyclerViewAdapter;
     private RecyclerView mainRecyclerView;
     private LinearLayoutManager mLinearLayoutManager1;
-    private ImageButton menuButton;
-    private Button cityButton, reservationButton;
+    private Button cityButton, reservationButton, menuExitButton;
     private CityFragment cityFragment;
     private ReservationFragment reservationFragment;
+    private MenuFragment menuFragment;
+    private NoneFragment noneFragment;
+
+    private ImageButton menuButton;
+
     private int fragmentstate;
+    public int menuFragmentState = 0;
     private int CITY_FRAGMENT = 0;
     private int RESERVATION_FRAGMENT = 1;
 
@@ -31,47 +38,39 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        cityButton = findViewById(R.id.btnMyCity);
-        reservationButton = findViewById(R.id.btnHotelReservation);
-
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.frgCityOrReservation, new CityFragment());
-        fragmentTransaction.commit();
-        fragmentstate = CITY_FRAGMENT;
+        fragmentstate = RESERVATION_FRAGMENT;
+        replaceFragment(fragmentstate);
 
         mainRecyclerView = findViewById(R.id.rvMainList);
         mLinearLayoutManager1 = new LinearLayoutManager(this);
         mainRecyclerView.setLayoutManager(mLinearLayoutManager1);
 
+        cityButton = findViewById(R.id.btnMyCity);
         cityButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                if(fragmentstate == RESERVATION_FRAGMENT){
-                    cityFragment = new CityFragment();
-                    FragmentManager fm = getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
-                    fragmentTransaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-
-                    fragmentTransaction.replace(R.id.frgCityOrReservation, cityFragment);
-                    fragmentTransaction.commit();
-                    fragmentstate = CITY_FRAGMENT;
-                }
+                replaceFragment(fragmentstate);
             }
         });
+        reservationButton = findViewById(R.id.btnHotelReservation);
         reservationButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                if(fragmentstate == CITY_FRAGMENT){
-                    reservationFragment = new ReservationFragment();
-                    FragmentManager fm = getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
-                    fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
+                replaceFragment(fragmentstate);
+            }
+        });
+        menuButton = findViewById(R.id.btnMenu);
+        menuButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_right);
 
-                    fragmentTransaction.replace(R.id.frgCityOrReservation, reservationFragment);
-                    fragmentTransaction.commit();
-                    fragmentstate = RESERVATION_FRAGMENT;
-                }
+                menuFragment = new MenuFragment();
+                fragmentTransaction.replace(R.id.frgMenu, menuFragment);
+                fragmentTransaction.commit();
+                menuFragmentState = 1;
             }
         });
 
@@ -84,18 +83,42 @@ public class MainActivity extends AppCompatActivity {
 
         mainRecyclerViewAdapter = new MainRecyclerViewAdapter(MainActivity.this, mainArrayList);
         mainRecyclerView.setAdapter(mainRecyclerViewAdapter);
+    }
+    public void replaceFragment(int fragstate){
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+        if(fragstate == RESERVATION_FRAGMENT){
+            cityFragment = new CityFragment();
+            fragmentTransaction.replace(R.id.frgCityOrReservation, cityFragment);
+            fragmentTransaction.commit();
+            fragmentstate = CITY_FRAGMENT;
+        }
+        else if(fragstate == CITY_FRAGMENT){
+            reservationFragment = new ReservationFragment();
+            fragmentTransaction.replace(R.id.frgCityOrReservation, reservationFragment);
+            fragmentTransaction.commit();
+            fragmentstate = RESERVATION_FRAGMENT;
+        }
+    }
+    public void hideMenu(){
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_right);
 
-        menuButton = findViewById(R.id.btnMenu);
-        menuButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
+        noneFragment = new NoneFragment();
+        fragmentTransaction.replace(R.id.frgMenu, noneFragment);
+        fragmentTransaction.commit();
+        //menuFragmentState = 0;
     }
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.frgMenu);
+        if(currentFragment == menuFragment){
+            hideMenu();
+        }
+        else{
+            super.onBackPressed();
+        }
     }
 }

@@ -2,7 +2,7 @@ package com.example.practice;
 
 import android.graphics.drawable.Drawable;
 
-public class MenuRecyclerViewItem1 {
+public class MainRecyclerViewItem {
 
     private Drawable main_image;
     private String main_description1;

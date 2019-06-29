@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".MainActivity">
 
     <android.support.v4.widget.NestedScrollView
@@ -111,8 +111,10 @@
     </android.support.v4.widget.NestedScrollView>
     <android.support.constraint.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_gravity="end">
         <fragment
+            android:id="@+id/frgMenu"
             android:name="com.example.practice.NoneFragment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
