@@ -1,5 +1,7 @@
 package com.example.practice;
 
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,25 +15,65 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private ArrayList<MainRecyclerViewItem> mainArrayList;
-    private ArrayList<MainHorizontalRecyclerViewItem> cityArrayList;
     private MainRecyclerViewAdapter mainRecyclerViewAdapter;
-    private MainHorizontalRecyclerViewAdapter cityRecyclerViewAdapter;
     private RecyclerView mainRecyclerView;
-    private RecyclerView cityRecyclerView;
-    private LinearLayoutManager mLinearLayoutManager1, mLinearLayoutManager2;
+    private LinearLayoutManager mLinearLayoutManager1;
     private ImageButton menuButton;
+    private Button cityButton, reservationButton;
+    private CityFragment cityFragment;
+    private ReservationFragment reservationFragment;
+    private int fragmentstate;
+    private int CITY_FRAGMENT = 0;
+    private int RESERVATION_FRAGMENT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        cityButton = findViewById(R.id.btnMyCity);
+        reservationButton = findViewById(R.id.btnHotelReservation);
+
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.replace(R.id.frgCityOrReservation, new CityFragment());
+        fragmentTransaction.commit();
+        fragmentstate = CITY_FRAGMENT;
+
         mainRecyclerView = findViewById(R.id.rvMainList);
-        cityRecyclerView = findViewById(R.id.rvCity);
         mLinearLayoutManager1 = new LinearLayoutManager(this);
-        mLinearLayoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mainRecyclerView.setLayoutManager(mLinearLayoutManager1);
-        cityRecyclerView.setLayoutManager(mLinearLayoutManager2);
+
+        cityButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                if(fragmentstate == RESERVATION_FRAGMENT){
+                    cityFragment = new CityFragment();
+                    FragmentManager fm = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                    fragmentTransaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+
+                    fragmentTransaction.replace(R.id.frgCityOrReservation, cityFragment);
+                    fragmentTransaction.commit();
+                    fragmentstate = CITY_FRAGMENT;
+                }
+            }
+        });
+        reservationButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                if(fragmentstate == CITY_FRAGMENT){
+                    reservationFragment = new ReservationFragment();
+                    FragmentManager fm = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                    fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                    fragmentTransaction.replace(R.id.frgCityOrReservation, reservationFragment);
+                    fragmentTransaction.commit();
+                    fragmentstate = RESERVATION_FRAGMENT;
+                }
+            }
+        });
 
         mainArrayList = new ArrayList<>();
         mainArrayList.add(new MainRecyclerViewItem(getDrawable(R.drawable.coffee), "알고 먹어야 더 맛있는, 베트남 커피", "왜 한국 커피보다 맛있을까?"));
@@ -43,17 +85,6 @@ public class MainActivity extends AppCompatActivity {
         mainRecyclerViewAdapter = new MainRecyclerViewAdapter(MainActivity.this, mainArrayList);
         mainRecyclerView.setAdapter(mainRecyclerViewAdapter);
 
-        cityArrayList = new ArrayList<>();
-        cityArrayList.add(new MainHorizontalRecyclerViewItem(getDrawable(R.drawable.vancouver), "VANCOUVER"));
-        cityArrayList.add(new MainHorizontalRecyclerViewItem(getDrawable(R.drawable.barcelona), "BARCELONA"));
-        cityArrayList.add(new MainHorizontalRecyclerViewItem(getDrawable(R.drawable.chiang_mai), "CHINAG MAI"));
-        cityArrayList.add(new MainHorizontalRecyclerViewItem(getDrawable(R.drawable.cebu), "CEBU"));
-        cityArrayList.add(new MainHorizontalRecyclerViewItem(getDrawable(R.drawable.prague), "PRAGUE"));
-        cityArrayList.add(new MainHorizontalRecyclerViewItem(getDrawable(R.drawable.toronto), "TORONTO"));
-
-        cityRecyclerViewAdapter = new MainHorizontalRecyclerViewAdapter(MainActivity.this, cityArrayList);
-        cityRecyclerView.setAdapter(cityRecyclerViewAdapter);
-
         menuButton = findViewById(R.id.btnMenu);
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,5 +93,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

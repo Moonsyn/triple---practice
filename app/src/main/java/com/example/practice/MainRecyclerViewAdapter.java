@@ -10,9 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.practice.MainRecyclerViewItem;
-import com.example.practice.MainActivity;
 
 import java.util.ArrayList;
 
