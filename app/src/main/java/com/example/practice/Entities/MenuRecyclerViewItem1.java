@@ -1,4 +1,4 @@
-package com.example.practice;
+package com.example.practice.Entities;
 
 import android.graphics.drawable.Drawable;
 

@@ -1,7 +1,6 @@
-package com.example.practice;
+package com.example.practice.Activity;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +10,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
+
+import com.example.practice.Fragment.CityFragment;
+import com.example.practice.Fragment.MenuFragment;
+import com.example.practice.Fragment.NoneFragment;
+import com.example.practice.Adapter.MainRecyclerViewAdapter;
+import com.example.practice.Entities.MainRecyclerViewItem;
+import com.example.practice.R;
+import com.example.practice.Fragment.ReservationFragment;
 
 import java.util.ArrayList;
 
@@ -20,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private MainRecyclerViewAdapter mainRecyclerViewAdapter;
     private RecyclerView mainRecyclerView;
     private LinearLayoutManager mLinearLayoutManager1;
-    private Button cityButton, reservationButton, menuExitButton;
+    private TextView cityButton, reservationButton;
+    private Button menuExitButton;
     private CityFragment cityFragment;
     private ReservationFragment reservationFragment;
     private MenuFragment menuFragment;
@@ -28,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageButton menuButton;
 
-    private int fragmentstate;
+    private int fragmentState;
     public int menuFragmentState = 0;
     private int CITY_FRAGMENT = 0;
     private int RESERVATION_FRAGMENT = 1;
@@ -38,25 +47,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fragmentstate = RESERVATION_FRAGMENT;
-        replaceFragment(fragmentstate);
+        fragmentState = RESERVATION_FRAGMENT;
+        replaceFragment(fragmentState);
 
         mainRecyclerView = findViewById(R.id.rvMainList);
         mLinearLayoutManager1 = new LinearLayoutManager(this);
         mainRecyclerView.setLayoutManager(mLinearLayoutManager1);
 
-        cityButton = findViewById(R.id.btnMyCity);
+        cityButton = findViewById(R.id.tvMyCity);
         cityButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                replaceFragment(fragmentstate);
+                replaceFragment(fragmentState);
             }
         });
-        reservationButton = findViewById(R.id.btnHotelReservation);
+        reservationButton = findViewById(R.id.tvHotelReservation);
         reservationButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                replaceFragment(fragmentstate);
+                replaceFragment(fragmentState);
             }
         });
         menuButton = findViewById(R.id.btnMenu);
@@ -92,15 +101,16 @@ public class MainActivity extends AppCompatActivity {
             cityFragment = new CityFragment();
             fragmentTransaction.replace(R.id.frgCityOrReservation, cityFragment);
             fragmentTransaction.commit();
-            fragmentstate = CITY_FRAGMENT;
+            fragmentState = CITY_FRAGMENT;
         }
         else if(fragstate == CITY_FRAGMENT){
             reservationFragment = new ReservationFragment();
             fragmentTransaction.replace(R.id.frgCityOrReservation, reservationFragment);
             fragmentTransaction.commit();
-            fragmentstate = RESERVATION_FRAGMENT;
+            fragmentState = RESERVATION_FRAGMENT;
         }
     }
+
     public void hideMenu(){
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();

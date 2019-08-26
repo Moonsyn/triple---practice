@@ -1,4 +1,4 @@
-package com.example.practice;
+package com.example.practice.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.practice.Activity.NextActivity;
+import com.example.practice.R;
+import com.example.practice.Entities.ReservationRecyclerViewItem;
 
 import java.util.ArrayList;
 

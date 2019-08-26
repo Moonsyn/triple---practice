@@ -1,4 +1,4 @@
-package com.example.practice;
+package com.example.practice.Fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,6 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.example.practice.Adapter.MenuRecyclerViewAdapter1;
+import com.example.practice.Adapter.MenuRecyclerViewAdapter2;
+import com.example.practice.Entities.MenuRecyclerViewItem1;
+import com.example.practice.Entities.MenuRecyclerViewItem2;
+import com.example.practice.R;
 
 import java.util.ArrayList;
 

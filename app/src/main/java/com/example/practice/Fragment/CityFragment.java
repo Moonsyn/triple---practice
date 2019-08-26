@@ -1,4 +1,4 @@
-package com.example.practice;
+package com.example.practice.Fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,6 +9,10 @@ import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.practice.Adapter.CityRecyclerViewAdapter;
+import com.example.practice.Entities.CityRecyclerViewItem;
+import com.example.practice.R;
 
 import java.util.ArrayList;
 

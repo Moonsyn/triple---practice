@@ -1,4 +1,4 @@
-package com.example.practice;
+package com.example.practice.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.practice.Activity.NextActivity;
+import com.example.practice.Entities.CityRecyclerViewItem;
+import com.example.practice.R;
 
 import java.util.ArrayList;
 
@@ -24,7 +28,7 @@ public class CityRecyclerViewAdapter extends RecyclerView.Adapter<CityRecyclerVi
         public CityViewHolder(@NonNull View view) {
             super(view);
             this.city_image = view.findViewById(R.id.imgCity);
-            this.city_name = view.findViewById(R.id.tvCityName);
+            this.city_name = view.findViewById(R.id.tvCityAttribute);
             final View mView = view;
         }
     }
@@ -45,7 +49,7 @@ public class CityRecyclerViewAdapter extends RecyclerView.Adapter<CityRecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CityViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull final CityViewHolder viewHolder, int position) {
         viewHolder.city_image.setImageDrawable(mList.get(position).getCity_image());
         viewHolder.city_name.setText(mList.get(position).getCity_name());
 
@@ -54,6 +58,7 @@ public class CityRecyclerViewAdapter extends RecyclerView.Adapter<CityRecyclerVi
             public void onClick(View view){
                 Context context = view.getContext();
                 Intent intent = new Intent(context, NextActivity.class);
+                intent.putExtra("name", viewHolder.city_name.getText().toString());
                 context.startActivity(intent);
             }
         });

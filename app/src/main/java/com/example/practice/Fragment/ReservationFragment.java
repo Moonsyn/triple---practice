@@ -1,4 +1,4 @@
-package com.example.practice;
+package com.example.practice.Fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,6 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.practice.Adapter.ReservationRecyclerViewAdapter;
+import com.example.practice.Entities.ReservationRecyclerViewItem;
+import com.example.practice.R;
 
 import java.util.ArrayList;
 

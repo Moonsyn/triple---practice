@@ -1,4 +1,4 @@
-package com.example.practice;
+package com.example.practice.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.practice.Activity.NextActivity;
+import com.example.practice.Entities.MainHorizontalRecyclerViewItem;
+import com.example.practice.R;
 
 import java.util.ArrayList;
 
@@ -24,7 +28,7 @@ public class MainHorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Main
         public CityViewHolder(@NonNull View view) {
             super(view);
             this.city_image = view.findViewById(R.id.imgCity);
-            this.city_name = view.findViewById(R.id.tvCityName);
+            this.city_name = view.findViewById(R.id.tvCityAttribute);
             final View mView = view;
         }
     }
