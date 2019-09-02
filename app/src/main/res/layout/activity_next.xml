@@ -112,4 +112,90 @@
             android:background="#777777"/>
     </android.support.constraint.ConstraintLayout>
 
+    <LinearLayout
+        android:id="@+id/llBasicInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#ffffff"
+        android:layout_marginTop="10dp"
+        android:paddingStart="20dp">
+        <TextView
+            android:id="@+id/tvBasicInfoTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            tools:text="이스탄불 기초 정보"/>
+
+        <TextView
+            android:id="@+id/tvBasicInfoDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimary"
+            tools:text="여행 전 알아두면 좋을 이스탄불 기초 정보"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:textSize="15sp"
+            android:textColor="#0000AA"
+            android:gravity="center"
+            android:text="자세히"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llHotel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#ffffff"
+        android:layout_marginTop="20dp"
+        android:paddingStart="20dp">
+        <TextView
+            android:id="@+id/tvHotelTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            android:text="트리플 추천 호텔"/>
+
+        <TextView
+            android:id="@+id/tvHotelDescription1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimary"
+            tools:text="여행자들이 선호하는 호텔,"/>
+
+        <TextView
+            android:id="@+id/tvHotelDescription2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimary"
+            tools:text="트리플이 추천합니다."/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvHotel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:textSize="15sp"
+            android:textColor="#0000AA"
+            android:gravity="center"
+            android:text="전체보기"/>
+    </LinearLayout>
+
 </LinearLayout>

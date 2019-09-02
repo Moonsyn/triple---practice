@@ -11,7 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.practice.Adapter.CityAttributeRecyclerViewAdapter;
+import com.example.practice.Adapter.CityHotelRecyclerViewAdapter;
 import com.example.practice.Entities.CityAttributeRecyclerViewItem;
+import com.example.practice.Entities.CityHotelRecyclerViewItem;
 import com.example.practice.Entities.WeatherItem;
 import com.example.practice.Entities.WeatherMainItem;
 import com.example.practice.R;
@@ -32,41 +34,57 @@ public class NextActivity extends AppCompatActivity {
 
     private TextView cityMainTitle, cityWeatherTitle, cityWeatherDescription;
 
-    private RecyclerView cityAttributeRecyclerView;
-    private ArrayList<CityAttributeRecyclerViewItem> mList;
+    private RecyclerView cityAttributeRecyclerView, cityHotelRecyclerView;
+    private ArrayList<CityAttributeRecyclerViewItem> attributeList;
+    private ArrayList<CityHotelRecyclerViewItem> hotelList;
 
     private LinearLayoutManager mLinearLayoutManager;
 
     private CityAttributeRecyclerViewAdapter cityAttributeRecyclerViewAdapter;
+    private CityHotelRecyclerViewAdapter cityHotelRecyclerViewAdapter;
 
     private String cityName, weather, temp;
 
     private String url = "http://api.openweathermap.org/data/2.5/weather?q=London&APPID=19062284d96edefeb8a2a10aa47b638f";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_next);
 
-        // 도시 관광 요소 리사이클러 뷰 구성 코드 (18줄)
+        // 도시 관광 요소 리사이클러 뷰 구성 코드 (18줄) + 도시 호텔 추천 리스트 리사이클러 뷰 구성 코드
         cityAttributeRecyclerView = findViewById(R.id.rvCityAttribute);
+        cityHotelRecyclerView = findViewById(R.id.rvHotel);
 
         mLinearLayoutManager = new LinearLayoutManager(this);
         mLinearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
 
         cityAttributeRecyclerView.setLayoutManager(mLinearLayoutManager);
+        cityHotelRecyclerView.setLayoutManager(mLinearLayoutManager);
 
-        mList = new ArrayList<>();
+        attributeList = new ArrayList<>();
 
-        mList.add(new CityAttributeRecyclerViewItem("일정"));
-        mList.add(new CityAttributeRecyclerViewItem("가이드"));
-        mList.add(new CityAttributeRecyclerViewItem("호텔"));
-        mList.add(new CityAttributeRecyclerViewItem("관광"));
-        mList.add(new CityAttributeRecyclerViewItem("맛집"));
-        mList.add(new CityAttributeRecyclerViewItem("투어,티켓"));
-        mList.add(new CityAttributeRecyclerViewItem("저장"));
+        attributeList.add(new CityAttributeRecyclerViewItem("일정"));
+        attributeList.add(new CityAttributeRecyclerViewItem("가이드"));
+        attributeList.add(new CityAttributeRecyclerViewItem("호텔"));
+        attributeList.add(new CityAttributeRecyclerViewItem("관광"));
+        attributeList.add(new CityAttributeRecyclerViewItem("맛집"));
+        attributeList.add(new CityAttributeRecyclerViewItem("투어,티켓"));
+        attributeList.add(new CityAttributeRecyclerViewItem("저장"));
 
-        cityAttributeRecyclerViewAdapter = new CityAttributeRecyclerViewAdapter(NextActivity.this, mList);
+        hotelList = new ArrayList<>();
+
+        hotelList.add(new CityHotelRecyclerViewItem(getDrawable(R.drawable.barcelona), "코타키나발루에 바르셀로나 호텔", "4성급, 도심 지역", "218,937원"));
+        hotelList.add(new CityHotelRecyclerViewItem(getDrawable(R.drawable.chiang_mai), "프리미엄 S Class 라운지 호텔", "4성급, 외곽 지역", "123,528원"));
+        hotelList.add(new CityHotelRecyclerViewItem(getDrawable(R.drawable.cebu), "참 좋은 호텔", "3성급, 도심 지역", "87,700원"));
+        hotelList.add(new CityHotelRecyclerViewItem(getDrawable(R.drawable.danang), "가성비만 좋은 호텔", "1.5성급, 도심 지역", "34,176원"));
+        hotelList.add(new CityHotelRecyclerViewItem(getDrawable(R.drawable.fukuoka_hotel), "적당히 좋은 그저 그런 호텔", "2.5성급, 도심 지역", "50,000원"));
+
+        cityAttributeRecyclerViewAdapter = new CityAttributeRecyclerViewAdapter(NextActivity.this, attributeList);
         cityAttributeRecyclerView.setAdapter(cityAttributeRecyclerViewAdapter);
+
+        cityHotelRecyclerViewAdapter = new CityHotelRecyclerViewAdapter(NextActivity.this, hotelList);
+        cityHotelRecyclerView.setAdapter(cityHotelRecyclerViewAdapter);
 
         // intent로 받은 도시명 textview에 적는 코드. 이때 날씨도 같이 적는다.
         Intent intent = getIntent();
@@ -147,11 +165,11 @@ public class NextActivity extends AppCompatActivity {
         @Override
         protected void onCancelled() {
             super.onCancelled();
-
             Toast.makeText(NextActivity.this, "날씨 정보를 띄우지 못하였습니다", Toast.LENGTH_SHORT).show();
-
         }
+    }
 
+    private void makeRecyclerView(RecyclerView view, RecyclerView.Adapter adapter, ArrayList<Class> list){
 
     }
 }
