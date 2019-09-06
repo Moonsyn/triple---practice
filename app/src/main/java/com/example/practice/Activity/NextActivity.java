@@ -12,13 +12,16 @@ import android.widget.Toast;
 
 import com.example.practice.Adapter.CityAttributeRecyclerViewAdapter;
 import com.example.practice.Adapter.CityHotelRecyclerViewAdapter;
+import com.example.practice.Adapter.CityTourRecyclerViewAdapter;
 import com.example.practice.Entities.CityAttributeRecyclerViewItem;
 import com.example.practice.Entities.CityHotelRecyclerViewItem;
+import com.example.practice.Entities.CityTourRecyclerViewItem;
 import com.example.practice.Entities.WeatherItem;
 import com.example.practice.Entities.WeatherMainItem;
 import com.example.practice.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -34,18 +37,22 @@ public class NextActivity extends AppCompatActivity {
 
     private TextView cityMainTitle, cityWeatherTitle, cityWeatherDescription;
 
-    private RecyclerView cityAttributeRecyclerView, cityHotelRecyclerView;
+    private RecyclerView cityAttributeRecyclerView, cityHotelRecyclerView, cityTourRecyclerView;
     private ArrayList<CityAttributeRecyclerViewItem> attributeList;
     private ArrayList<CityHotelRecyclerViewItem> hotelList;
+    private ArrayList<CityTourRecyclerViewItem> tourList;
 
-    private LinearLayoutManager mLinearLayoutManager;
+    private LinearLayoutManager weatherLayoutManager, hotelsLayoutManager, tourLayoutManager;
 
     private CityAttributeRecyclerViewAdapter cityAttributeRecyclerViewAdapter;
     private CityHotelRecyclerViewAdapter cityHotelRecyclerViewAdapter;
+    private CityTourRecyclerViewAdapter cityTourRecyclerViewAdapter;
 
     private String cityName, weather, temp;
 
-    private String url = "http://api.openweathermap.org/data/2.5/weather?q=London&APPID=19062284d96edefeb8a2a10aa47b638f";
+    private String URL_WEATHER = "http://api.openweathermap.org/data/2.5/weather?q=London&APPID=19062284d96edefeb8a2a10aa47b638f";
+    private String URL_HOTELS = "";
+    private String URL_TOUR = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +62,20 @@ public class NextActivity extends AppCompatActivity {
         // 도시 관광 요소 리사이클러 뷰 구성 코드 (18줄) + 도시 호텔 추천 리스트 리사이클러 뷰 구성 코드
         cityAttributeRecyclerView = findViewById(R.id.rvCityAttribute);
         cityHotelRecyclerView = findViewById(R.id.rvHotel);
+        cityTourRecyclerView = findViewById(R.id.rvTour);
 
-        mLinearLayoutManager = new LinearLayoutManager(this);
-        mLinearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        weatherLayoutManager = new LinearLayoutManager(this);
+        weatherLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
 
-        cityAttributeRecyclerView.setLayoutManager(mLinearLayoutManager);
-        cityHotelRecyclerView.setLayoutManager(mLinearLayoutManager);
+        hotelsLayoutManager = new LinearLayoutManager(this);
+        hotelsLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        tourLayoutManager = new LinearLayoutManager(this);
+        tourLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        cityAttributeRecyclerView.setLayoutManager(weatherLayoutManager);
+        cityHotelRecyclerView.setLayoutManager(hotelsLayoutManager);
+        cityTourRecyclerView.setLayoutManager(tourLayoutManager);
 
         attributeList = new ArrayList<>();
 
@@ -72,19 +87,8 @@ public class NextActivity extends AppCompatActivity {
         attributeList.add(new CityAttributeRecyclerViewItem("투어,티켓"));
         attributeList.add(new CityAttributeRecyclerViewItem("저장"));
 
-        hotelList = new ArrayList<>();
-
-        hotelList.add(new CityHotelRecyclerViewItem(getDrawable(R.drawable.barcelona), "코타키나발루에 바르셀로나 호텔", "4성급, 도심 지역", "218,937원"));
-        hotelList.add(new CityHotelRecyclerViewItem(getDrawable(R.drawable.chiang_mai), "프리미엄 S Class 라운지 호텔", "4성급, 외곽 지역", "123,528원"));
-        hotelList.add(new CityHotelRecyclerViewItem(getDrawable(R.drawable.cebu), "참 좋은 호텔", "3성급, 도심 지역", "87,700원"));
-        hotelList.add(new CityHotelRecyclerViewItem(getDrawable(R.drawable.danang), "가성비만 좋은 호텔", "1.5성급, 도심 지역", "34,176원"));
-        hotelList.add(new CityHotelRecyclerViewItem(getDrawable(R.drawable.fukuoka_hotel), "적당히 좋은 그저 그런 호텔", "2.5성급, 도심 지역", "50,000원"));
-
         cityAttributeRecyclerViewAdapter = new CityAttributeRecyclerViewAdapter(NextActivity.this, attributeList);
         cityAttributeRecyclerView.setAdapter(cityAttributeRecyclerViewAdapter);
-
-        cityHotelRecyclerViewAdapter = new CityHotelRecyclerViewAdapter(NextActivity.this, hotelList);
-        cityHotelRecyclerView.setAdapter(cityHotelRecyclerViewAdapter);
 
         // intent로 받은 도시명 textview에 적는 코드. 이때 날씨도 같이 적는다.
         Intent intent = getIntent();
@@ -100,14 +104,22 @@ public class NextActivity extends AppCompatActivity {
         // 도시 날씨 AsyncTask 실행
         cityWeatherDescription = findViewById(R.id.tvWeatherDescription);
 
-        WeatherAsyncTask mWeatherAsyncTask = new WeatherAsyncTask();
-        mWeatherAsyncTask.execute();
+        TripleAsyncTask weatherAsyncTask = new TripleAsyncTask(URL_WEATHER);
+        TripleAsyncTask hotelsAsyncTask = new TripleAsyncTask(URL_HOTELS);
+        TripleAsyncTask tourAsyncTask = new TripleAsyncTask(URL_TOUR);
 
+        weatherAsyncTask.execute();
+        hotelsAsyncTask.execute();
+        tourAsyncTask.execute();
     }
-
-    private class WeatherAsyncTask extends AsyncTask<String, Void, Response>{
+    private class TripleAsyncTask extends AsyncTask<String, Void, Response>{
 
         OkHttpClient client = new OkHttpClient();
+        String url;
+
+        public TripleAsyncTask(String url) {
+            this.url = url;
+        }
 
         @Override
         protected void onPreExecute() {
@@ -123,10 +135,8 @@ public class NextActivity extends AppCompatActivity {
                 response = client.newCall(request).execute();
                 return response;
             } catch (IOException e) {
-
                 e.printStackTrace();
             }
-
             return null;
         }
 
@@ -137,39 +147,61 @@ public class NextActivity extends AppCompatActivity {
             if(response.body() == null){
                 return;
             }
-
             Gson gson = new GsonBuilder().create();
 
             JsonParser parser = new JsonParser();
 
-            JsonObject object = parser.parse(response.body().charStream()).getAsJsonObject();
+            if(url.equals(URL_WEATHER)){
+                JsonObject object = parser.parse(response.body().charStream()).getAsJsonObject();
 
-            Log.d("JSON OBJECT", String.valueOf(object));
+                Log.d("JSON OBJECT", String.valueOf(object));
 
-            JsonElement weatherObject = object.get("weather").getAsJsonArray().get(0).getAsJsonObject();
-            JsonElement mainObject = object.get("main");
+                JsonElement weatherObject = object.get("weather").getAsJsonArray().get(0).getAsJsonObject();
+                JsonElement mainObject = object.get("main");
 
-            Log.d("WEATHER DATA", String.valueOf(weatherObject));
-            Log.d("MAIN DATA", String.valueOf(mainObject));
+                WeatherItem result1 = gson.fromJson(weatherObject, WeatherItem.class);
+                WeatherMainItem result2 = gson.fromJson(mainObject, WeatherMainItem.class);
 
-            WeatherItem result1 = gson.fromJson(weatherObject, WeatherItem.class);
-            WeatherMainItem result2 = gson.fromJson(mainObject, WeatherMainItem.class);
+                weather = result1.getMain();
+                temp = String.valueOf((int)(Double.parseDouble(result2.getTemp()) - 273.15));
 
-            weather = result1.getMain();
-            temp = String.valueOf((int)(Double.parseDouble(result2.getTemp()) - 273.15));
+                cityWeatherDescription.setText("날씨 : " + weather + ", 기온 " + temp + "도");
+            }else if(url.equals(URL_HOTELS)){
+                JsonArray jsonArray = parser.parse(response.body().charStream()).getAsJsonArray();
 
-            cityWeatherDescription.setText("날씨 : " + weather + ", 기온 " + temp + "도");
+                hotelList = new ArrayList<>();
+
+                for(int i=0;i<jsonArray.size();i++){
+                    JsonObject object = jsonArray.get(i).getAsJsonObject();
+
+                    CityHotelRecyclerViewItem hotel = gson.fromJson(object, CityHotelRecyclerViewItem.class);
+
+                    hotelList.add(hotel);
+                }
+                cityHotelRecyclerViewAdapter = new CityHotelRecyclerViewAdapter(NextActivity.this, hotelList);
+                cityHotelRecyclerView.setAdapter(cityHotelRecyclerViewAdapter);
+            } else if(url==URL_TOUR){
+                JsonArray jsonArray = parser.parse(response.body().charStream()).getAsJsonArray();
+
+                tourList = new ArrayList<>();
+
+                for(int i=0;i<jsonArray.size();i++){
+                    JsonObject object = jsonArray.get(i).getAsJsonObject();
+
+                    CityTourRecyclerViewItem tour = gson.fromJson(object, CityTourRecyclerViewItem.class);
+
+                    tourList.add(tour);
+                }
+                cityTourRecyclerViewAdapter = new CityTourRecyclerViewAdapter(NextActivity.this, tourList);
+                cityTourRecyclerView.setAdapter(cityTourRecyclerViewAdapter);
+            }
 
         }
-
         @Override
         protected void onCancelled() {
             super.onCancelled();
-            Toast.makeText(NextActivity.this, "날씨 정보를 띄우지 못하였습니다", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NextActivity.this, "통신 중 예기치 못한 에러가 발생하였습니다.", Toast.LENGTH_LONG).show();
         }
     }
 
-    private void makeRecyclerView(RecyclerView view, RecyclerView.Adapter adapter, ArrayList<Class> list){
-
-    }
 }

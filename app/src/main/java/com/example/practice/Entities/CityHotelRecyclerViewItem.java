@@ -4,45 +4,63 @@ import android.graphics.drawable.Drawable;
 
 public class CityHotelRecyclerViewItem {
 
-    private Drawable hotelImage;
-    private String hotelName, hotelCategory, hotelPrice;
+    private int id, price;
+    private String name, grade, location, image;
 
-    public CityHotelRecyclerViewItem(Drawable hotelImage, String hotelName, String hotelCategory, String hotelPrice) {
-        this.hotelImage = hotelImage;
-        this.hotelName = hotelName;
-        this.hotelCategory = hotelCategory;
-        this.hotelPrice = hotelPrice;
+    public CityHotelRecyclerViewItem(int id, String name, String grade, String location, int price, String image) {
+        this.id = id;
+        this.name = name;
+        this.grade = grade;
+        this.location = location;
+        this.price = price;
+        this.image = image;
     }
 
-    public Drawable getHotelImage() {
-        return hotelImage;
+    public int getId() {
+        return id;
     }
 
-    public void setHotelImage(Drawable hotelImage) {
-        this.hotelImage = hotelImage;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getHotelName() {
-        return hotelName;
+    public int getPrice() {
+        return price;
     }
 
-    public void setHotelName(String hotelName) {
-        this.hotelName = hotelName;
+    public void setPrice(int price) {
+        this.price = price;
     }
 
-    public String getHotelCategory() {
-        return hotelCategory;
+    public String getName() {
+        return name;
     }
 
-    public void setHotelCategory(String hotelCategory) {
-        this.hotelCategory = hotelCategory;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getHotelPrice() {
-        return hotelPrice;
+    public String getGrade() {
+        return grade;
     }
 
-    public void setHotelPrice(String hotelPrice) {
-        this.hotelPrice = hotelPrice;
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

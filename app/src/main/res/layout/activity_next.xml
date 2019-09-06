@@ -5,197 +5,251 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvCityMainTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:gravity="center"
-        android:textSize="35sp"
-        android:textColor="#ffffff"
-        tools:text="코타키나발루,"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="0dp"
-        android:gravity="center"
-        android:textSize="35sp"
-        android:textColor="#ffffff"
-        android:text="언제 떠나세요?"/>
-    <android.support.v7.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="10dp"
-        card_view:cardBackgroundColor="@color/cardview_dark_background"
-        card_view:cardElevation="1dp"
-        card_view:cardCornerRadius="10dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="일정을 넣어보세요"
-            android:textSize="17sp"
-            android:textColor="#ffffff"/>
-    </android.support.v7.widget.CardView>
-    <View
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="40dp"
-        android:background="#777777"/>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvCityAttribute"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal"
-        android:paddingVertical="10dp"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#777777"/>
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/clWeather"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff"
-        android:layout_marginTop="10dp">
-        <TextView
-            android:id="@+id/tvWeatherTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="20dp"
-            tools:text="코타키나발루의 8월 날씨"
-            android:textColor="#000000"
-            android:textSize="22sp"/>
-        <TextView
-            android:id="@+id/tvWeatherDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            card_view:layout_constraintTop_toBottomOf="@+id/tvWeatherTitle"
-            card_view:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            tools:text="덥고 습한 날씨, 시원한 옷차림을 준비해요."
-            android:textColor="#000000"
-            android:textSize="18sp"/>
-
-        <View
-            android:id="@+id/vWeatherTopOutline"
+        android:layout_height="wrap_content">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="30dp"
-            card_view:layout_constraintTop_toBottomOf="@id/tvWeatherDescription"
-            android:background="#777777"/>
-        <TextView
-            android:id="@+id/tvWeatherDetail"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            card_view:layout_constraintTop_toBottomOf="@id/vWeatherTopOutline"
-            android:gravity="center"
-            android:text="자세히"
-            android:textColor="#0000AA"
-            android:textSize="18sp"/>
-        <View
-            android:id="@+id/vWeatherBottomOutline"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="130dp"
-            card_view:layout_constraintTop_toBottomOf="@id/tvWeatherDescription"
-            android:background="#777777"/>
-    </android.support.constraint.ConstraintLayout>
-
-    <LinearLayout
-        android:id="@+id/llBasicInfo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="#ffffff"
-        android:layout_marginTop="10dp"
-        android:paddingStart="20dp">
-        <TextView
-            android:id="@+id/tvBasicInfoTitle"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:textColor="#000000"
-            android:textSize="22sp"
-            tools:text="이스탄불 기초 정보"/>
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tvCityMainTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:textSize="35sp"
+                android:textColor="#ffffff"
+                tools:text="코타키나발루,"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="0dp"
+                android:gravity="center"
+                android:textSize="35sp"
+                android:textColor="#ffffff"
+                android:text="언제 떠나세요?"/>
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
+                card_view:cardBackgroundColor="@color/cardview_dark_background"
+                card_view:cardElevation="1dp"
+                card_view:cardCornerRadius="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="일정을 넣어보세요"
+                    android:textSize="17sp"
+                    android:textColor="#ffffff"/>
+            </android.support.v7.widget.CardView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="40dp"
+                android:background="#777777"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvCityAttribute"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:orientation="horizontal"
+                android:paddingVertical="10dp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#777777"/>
 
-        <TextView
-            android:id="@+id/tvBasicInfoDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textSize="15sp"
-            android:textColor="@color/colorPrimary"
-            tools:text="여행 전 알아두면 좋을 이스탄불 기초 정보"/>
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/clWeather"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:layout_marginTop="10dp">
+                <TextView
+                    android:id="@+id/tvWeatherTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    card_view:layout_constraintTop_toTopOf="parent"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginStart="20dp"
+                    tools:text="코타키나발루의 8월 날씨"
+                    android:textColor="#000000"
+                    android:textSize="22sp"/>
+                <TextView
+                    android:id="@+id/tvWeatherDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    card_view:layout_constraintTop_toBottomOf="@+id/tvWeatherTitle"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    tools:text="덥고 습한 날씨, 시원한 옷차림을 준비해요."
+                    android:textColor="#000000"
+                    android:textSize="18sp"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="10dp"
-            android:textSize="15sp"
-            android:textColor="#0000AA"
-            android:gravity="center"
-            android:text="자세히"/>
-    </LinearLayout>
+                <View
+                    android:id="@+id/vWeatherTopOutline"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="30dp"
+                    card_view:layout_constraintTop_toBottomOf="@id/tvWeatherDescription"
+                    android:background="#777777"/>
+                <TextView
+                    android:id="@+id/tvWeatherDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    card_view:layout_constraintTop_toBottomOf="@id/vWeatherTopOutline"
+                    android:gravity="center"
+                    android:text="자세히"
+                    android:textColor="#0000AA"
+                    android:textSize="18sp"/>
+                <View
+                    android:id="@+id/vWeatherBottomOutline"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="130dp"
+                    card_view:layout_constraintTop_toBottomOf="@id/tvWeatherDescription"
+                    android:background="#777777"/>
+            </android.support.constraint.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/llHotel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="#ffffff"
-        android:layout_marginTop="20dp"
-        android:paddingStart="20dp">
-        <TextView
-            android:id="@+id/tvHotelTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:textColor="#000000"
-            android:textSize="22sp"
-            android:text="트리플 추천 호텔"/>
+            <LinearLayout
+                android:id="@+id/llBasicInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#ffffff"
+                android:layout_marginTop="10dp"
+                android:paddingStart="20dp">
+                <TextView
+                    android:id="@+id/tvBasicInfoTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:textColor="#000000"
+                    android:textSize="22sp"
+                    android:text="도시의 기초 정보"/>
 
-        <TextView
-            android:id="@+id/tvHotelDescription1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textSize="15sp"
-            android:textColor="@color/colorPrimary"
-            tools:text="여행자들이 선호하는 호텔,"/>
+                <TextView
+                    android:id="@+id/tvBasicInfoDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorPrimary"
+                    android:text="여행 전 알아두면 좋을 여행 기초 정보"/>
 
-        <TextView
-            android:id="@+id/tvHotelDescription2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textColor="@color/colorPrimary"
-            tools:text="트리플이 추천합니다."/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="15sp"
+                    android:textColor="#0000AA"
+                    android:gravity="center"
+                    android:text="자세히"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/llHotel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#ffffff"
+                android:layout_marginTop="20dp"
+                android:paddingStart="20dp">
+                <TextView
+                    android:id="@+id/tvHotelTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:textColor="#000000"
+                    android:textSize="22sp"
+                    android:text="트리플 추천 호텔"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvHotel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </android.support.v7.widget.RecyclerView>
+                <TextView
+                    android:id="@+id/tvHotelDescription1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorPrimary"
+                    android:text="여행자들이 선호하는 호텔,"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="10dp"
-            android:textSize="15sp"
-            android:textColor="#0000AA"
-            android:gravity="center"
-            android:text="전체보기"/>
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tvHotelDescription2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorPrimary"
+                    android:text="트리플이 추천합니다."/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvHotel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingEnd="20dp">
+                </android.support.v7.widget.RecyclerView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:textSize="15sp"
+                    android:textColor="#0000AA"
+                    android:gravity="center"
+                    android:text="전체보기"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llTour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#ffffff"
+                android:layout_marginTop="20dp"
+                android:paddingStart="20dp">
+                <TextView
+                    android:id="@+id/tvTourTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:textColor="#000000"
+                    android:textSize="22sp"
+                    android:text="이스탄불에 왔다면 어디를 가야할까?"/>
+
+                <TextView
+                    android:id="@+id/tvTourDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorPrimary"
+                    android:text="이곳만큼은 반드시 들르자! 이스탄불 대표 명소 모음"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvTour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingEnd="20dp">
+                </android.support.v7.widget.RecyclerView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:textSize="15sp"
+                    android:textColor="#0000AA"
+                    android:gravity="center"
+                    android:text="자세히"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
 
 </LinearLayout>

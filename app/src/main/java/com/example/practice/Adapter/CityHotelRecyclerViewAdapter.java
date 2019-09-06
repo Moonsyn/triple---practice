@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.practice.Activity.NextActivity;
 import com.example.practice.Entities.CityHotelRecyclerViewItem;
 import com.example.practice.R;
@@ -55,10 +56,11 @@ public class CityHotelRecyclerViewAdapter extends RecyclerView.Adapter<CityHotel
 
     @Override
     public void onBindViewHolder(@NonNull CityHotelViewHolder viewHolder, int position) {
-        viewHolder.imgHotel.setImageDrawable(mList.get(position).getHotelImage());
-        viewHolder.tvHotelName.setText(mList.get(position).getHotelName());
-        viewHolder.tvHotelCategory.setText(mList.get(position).getHotelCategory());
-        viewHolder.tvHotelPrice.setText(mList.get(position).getHotelPrice());
+        //viewHolder.imgHotel.setImageDrawable(mList.get(position).getHotelImage());
+        Glide.with(context).asDrawable().load(mList.get(position).getImage()).into(viewHolder.imgHotel);
+        viewHolder.tvHotelName.setText(mList.get(position).getName());
+        viewHolder.tvHotelCategory.setText(mList.get(position).getGrade() + "성급, " + mList.get(position).getLocation());
+        viewHolder.tvHotelPrice.setText(String.valueOf(mList.get(position).getPrice()) + "원");
 
     }
 
