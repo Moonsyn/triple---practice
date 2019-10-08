@@ -1,26 +1,40 @@
 package com.example.practice.Activity;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.practice.Adapter.MainRecyclerViewAdapter;
+import com.example.practice.Entities.MainRecyclerViewItem;
 import com.example.practice.Fragment.CityFragment;
 import com.example.practice.Fragment.MenuFragment;
 import com.example.practice.Fragment.NoneFragment;
-import com.example.practice.Adapter.MainRecyclerViewAdapter;
-import com.example.practice.Entities.MainRecyclerViewItem;
-import com.example.practice.R;
 import com.example.practice.Fragment.ReservationFragment;
+import com.example.practice.R;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.Api;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.Status;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,6 +51,14 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageButton menuButton;
 
+    private String mUserName;
+    private String mPhotoUrl;
+
+    // Google or Firebase Variables
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+    private GoogleApiClient mGoogleApiClient;
+
     private int fragmentState;
     public int menuFragmentState = 0;
     private int CITY_FRAGMENT = 0;
@@ -46,6 +68,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        if(mUser == null){
+            // Not signed in, launch the SignIn Activity
+            startActivity(new Intent(MainActivity.this, SignInActivity.class));
+            finish();
+            return;
+        }else{
+            mUserName = mUser.getDisplayName();
+            if(mUser.getPhotoUrl() != null){
+                mPhotoUrl = mUser.getPhotoUrl().toString();
+            }
+        }
 
         fragmentState = RESERVATION_FRAGMENT;
         replaceFragment(fragmentState);

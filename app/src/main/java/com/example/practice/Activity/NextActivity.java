@@ -3,9 +3,9 @@ package com.example.practice.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,8 +51,8 @@ public class NextActivity extends AppCompatActivity {
     private String cityName, weather, temp;
 
     private String URL_WEATHER = "http://api.openweathermap.org/data/2.5/weather?q=London&APPID=19062284d96edefeb8a2a10aa47b638f";
-    private String URL_HOTELS = "";
-    private String URL_TOUR = "";
+    private String URL_HOTELS = "http://15.164.86.175:8000/hotels/list";
+    private String URL_TOUR = "http://15.164.86.175:8000/tour/list";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

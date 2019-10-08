@@ -1,8 +1,8 @@
 package com.example.practice.Adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.practice.Entities.CityHotelRecyclerViewItem;
 import com.example.practice.Entities.CityTourRecyclerViewItem;
 import com.example.practice.R;
 

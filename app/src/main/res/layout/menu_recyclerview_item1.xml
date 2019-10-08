@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#000000"/>
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginVertical="20dp">
@@ -36,7 +36,7 @@
                 android:textSize="21dp"
                 tools:text="내 예약"
                 android:textColor="#000000"/>
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
