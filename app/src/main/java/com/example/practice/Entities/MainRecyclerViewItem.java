@@ -1,24 +1,22 @@
 package com.example.practice.Entities;
 
-import android.graphics.drawable.Drawable;
-
 public class MainRecyclerViewItem {
 
-    private Drawable main_image;
+    private String main_image;
     private String main_description1;
     private String main_description2;
 
-    public MainRecyclerViewItem(Drawable main_image, String main_description1, String main_description2) {
+    public MainRecyclerViewItem(String main_image, String main_description1, String main_description2) {
         this.main_image = main_image;
         this.main_description1 = main_description1;
         this.main_description2 = main_description2;
     }
 
-    public Drawable getMain_image() {
+    public String getMain_image() {
         return main_image;
     }
 
-    public void setMain_image(Drawable main_image) {
+    public void setMain_image(String main_image) {
         this.main_image = main_image;
     }
 

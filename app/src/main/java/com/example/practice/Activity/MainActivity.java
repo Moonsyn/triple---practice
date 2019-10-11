@@ -7,10 +7,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,18 +21,12 @@ import com.example.practice.Fragment.MenuFragment;
 import com.example.practice.Fragment.NoneFragment;
 import com.example.practice.Fragment.ReservationFragment;
 import com.example.practice.R;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.Api;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
-import java.io.FileDescriptor;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private MainRecyclerViewAdapter mainRecyclerViewAdapter;
     private RecyclerView mainRecyclerView;
     private LinearLayoutManager mLinearLayoutManager1;
-    private TextView cityButton, reservationButton;
+    private TextView cityButton, reservationButton, tvUserName;
     private Button menuExitButton;
     private CityFragment cityFragment;
     private ReservationFragment reservationFragment;
@@ -57,13 +49,13 @@ public class MainActivity extends AppCompatActivity {
     // Google or Firebase Variables
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
-    private GoogleApiClient mGoogleApiClient;
+    private FirebaseStorage mStorage;
 
     private int fragmentState;
     public int menuFragmentState = 0;
     private int CITY_FRAGMENT = 0;
     private int RESERVATION_FRAGMENT = 1;
-
+    private long ONE_MEGABYTE = 1024 * 1024;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
             return;
         }else{
             mUserName = mUser.getDisplayName();
+            tvUserName = findViewById(R.id.tvUserId);
+            tvUserName.setText(mUserName);
             if(mUser.getPhotoUrl() != null){
                 mPhotoUrl = mUser.getPhotoUrl().toString();
             }
@@ -119,12 +113,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mStorage = FirebaseStorage.getInstance();
+        // App의 Firebase Storage 참조를 만든다.
+        StorageReference storageRef = mStorage.getReference();
+        // storageRef의 child 참조를 만든다. 이 imgRef는 내 Storage에서 "imgaes"를 가리킨다.
+        // 이 외에도 getParent()나 getRoot() 메소드를 이용해서 Reference를 탐색할 수 있다.
+        // getPath()는 파일까지의 경로, getName()는 파일의 이름을 리턴한다.
+        StorageReference imgRef = storageRef.child("images/Main");
+        // Storage 자체 url을 이용해서 참조하는 것도 가능하다.
+        StorageReference gsReference = mStorage.getReferenceFromUrl("gs://triple-practice.appspot.com");
+
         mainArrayList = new ArrayList<>();
-        mainArrayList.add(new MainRecyclerViewItem(getDrawable(R.drawable.coffee), "알고 먹어야 더 맛있는, 베트남 커피", "왜 한국 커피보다 맛있을까?"));
-        mainArrayList.add(new MainRecyclerViewItem(getDrawable(R.drawable.chiang_mai), "다낭 여행 마지막 날 꼭 해야 할 5가지", "마지막 1분도 놓치지 않을 거에요-"));
-        mainArrayList.add(new MainRecyclerViewItem(getDrawable(R.drawable.ocean), "올여름 떠나기 좋은 시원~한 여행지 추천", "여름 휴가지로 딱!"));
-        mainArrayList.add(new MainRecyclerViewItem(getDrawable(R.drawable.pasta), "이탈리아에서 현지인 맛집 찾아내는 법", "2019년 6월 기준 로마 정보 업데이트"));
-        mainArrayList.add(new MainRecyclerViewItem(getDrawable(R.drawable.vancouver), "살고 싶은 도시 1위, 밴쿠버로 오세요", "지금이 여행하기 딱 좋은 시기거든요"));
+        mainArrayList.add(new MainRecyclerViewItem("coffee.jpg", "알고 먹어야 더 맛있는, 베트남 커피", "왜 한국 커피보다 맛있을까?"));
+        mainArrayList.add(new MainRecyclerViewItem("chiang_mai.jpg", "다낭 여행 마지막 날 꼭 해야 할 5가지", "마지막 1분도 놓치지 않을 거에요-"));
+        mainArrayList.add(new MainRecyclerViewItem("ocean.jpg", "올여름 떠나기 좋은 시원~한 여행지 추천", "여름 휴가지로 딱!"));
+        mainArrayList.add(new MainRecyclerViewItem("pasta.jpg", "이탈리아에서 현지인 맛집 찾아내는 법", "2019년 6월 기준 로마 정보 업데이트"));
+        mainArrayList.add(new MainRecyclerViewItem("vancouver.jpg", "살고 싶은 도시 1위, 밴쿠버로 오세요", "지금이 여행하기 딱 좋은 시기거든요"));
 
         mainRecyclerViewAdapter = new MainRecyclerViewAdapter(MainActivity.this, mainArrayList);
         mainRecyclerView.setAdapter(mainRecyclerViewAdapter);

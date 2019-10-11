@@ -1,23 +1,31 @@
 package com.example.practice.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 
+import com.bumptech.glide.Glide;
+import com.example.practice.Activity.SignInActivity;
 import com.example.practice.Adapter.MenuRecyclerViewAdapter1;
 import com.example.practice.Adapter.MenuRecyclerViewAdapter2;
 import com.example.practice.Entities.MenuRecyclerViewItem1;
 import com.example.practice.Entities.MenuRecyclerViewItem2;
 import com.example.practice.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -26,19 +34,32 @@ public class MenuFragment extends Fragment {
 
     private ArrayList<MenuRecyclerViewItem1> menuArrayList1;
     private ArrayList<MenuRecyclerViewItem2> menuArrayList2;
+
     private MenuRecyclerViewAdapter1 menuRecyclerViewAdapter1;
     private MenuRecyclerViewAdapter2 menuRecyclerViewAdapter2;
     private RecyclerView menuRecyclerView1, menuRecyclerView2;
     private LinearLayoutManager mLinearLayoutManager1, mLinearLayoutManager2;
+
     private Context context;
+
     private FragmentActivity fragmentActivity;
-    private Button menuExitButton;
+
+    private TextView tvUserId;
+    private ImageView imgUserProfile;
+    private Button menuExitButton, logOutButton;
+
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+
     protected View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
         context = getContext();
         view = inflater.inflate(R.layout.fragment_menu, container, false);
+
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
 
         menuArrayList1 = new ArrayList<>();
         menuArrayList2 = new ArrayList<>();
@@ -78,6 +99,24 @@ public class MenuFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
+        logOutButton = view.findViewById(R.id.btnSignOut);
+        logOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth.signOut();
+                startActivity(new Intent(context, SignInActivity.class));
+                getActivity().finish();
+            }
+        });
+
+        tvUserId = view.findViewById(R.id.tv_menu_userId);
+        tvUserId.setText(mUser.getDisplayName());
+
+        imgUserProfile = view.findViewById(R.id.img_menu_userProfile);
+        if(mUser.getPhotoUrl() != null){
+            Glide.with(context).load(mUser.getPhotoUrl()).into(imgUserProfile);
+        }
+
         return view;
     }
 

@@ -3,4 +3,7 @@
     <string name="application_name">Triple</string>
     <string name="main_where_to_go">어디로 떠나시나요?</string>
     <string name="user_id">Moons님</string>
+    <string name="facebook_app_id">2111096015864704</string>
+    <string name="fb_login_protocol_scheme">fb2111096015864704</string>
+
 </resources>

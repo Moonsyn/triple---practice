@@ -32,7 +32,15 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation "com.google.code.gson:gson:2.8.5"
 
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+
     // Firebase dependencies
     implementation 'com.google.firebase:firebase-auth:19.1.0'
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.firebase:firebase-storage:19.0.1'
+    implementation 'com.firebaseui:firebase-ui-storage:4.3.1'
+
+    // Facebook Login dependencies
+    implementation 'com.facebook.android:facebook-login:[5,6)'
 }
 apply plugin: 'com.google.gms.google-services'

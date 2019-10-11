@@ -49,7 +49,6 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="30dp"
-                    android:text = "@string/user_id"
                     android:textSize="30dp"
                     android:textColor="#000000"/>
                 <Button
@@ -76,13 +75,14 @@
                     android:textColor="#000000"/>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cvUserProfile"
                     android:layout_width = "60dp"
                     android:layout_height="60dp"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginTop="30dp"
                     android:layout_marginRight="20dp"
-                    app:cardCornerRadius="50dp">
+                    app:cardCornerRadius="40dp">
                     <ImageView
                         android:id="@+id/img_menu_userProfile"
                         android:layout_width="match_parent"
@@ -90,6 +90,16 @@
                         android:background="@drawable/chiang_mai"
                         android:scaleType="centerCrop"/>
                 </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/btnSignOut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/cvUserProfile"
+                    app:layout_constraintRight_toRightOf="@+id/cvUserProfile"
+                    app:layout_constraintLeft_toLeftOf="@id/cvUserProfile"
+                    android:text="로그아웃"/>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvMenu1"

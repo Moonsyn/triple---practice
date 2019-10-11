@@ -3,12 +3,13 @@ package com.example.practice.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.practice.Adapter.CityAttributeRecyclerViewAdapter;
 import com.example.practice.Adapter.CityHotelRecyclerViewAdapter;
@@ -105,13 +106,14 @@ public class NextActivity extends AppCompatActivity {
         cityWeatherDescription = findViewById(R.id.tvWeatherDescription);
 
         TripleAsyncTask weatherAsyncTask = new TripleAsyncTask(URL_WEATHER);
-        TripleAsyncTask hotelsAsyncTask = new TripleAsyncTask(URL_HOTELS);
-        TripleAsyncTask tourAsyncTask = new TripleAsyncTask(URL_TOUR);
+        //TripleAsyncTask hotelsAsyncTask = new TripleAsyncTask(URL_HOTELS);
+        //TripleAsyncTask tourAsyncTask = new TripleAsyncTask(URL_TOUR);
 
         weatherAsyncTask.execute();
-        hotelsAsyncTask.execute();
-        tourAsyncTask.execute();
+        //hotelsAsyncTask.execute();
+        //tourAsyncTask.execute();
     }
+
     private class TripleAsyncTask extends AsyncTask<String, Void, Response>{
 
         OkHttpClient client = new OkHttpClient();
